@@ -1,0 +1,23 @@
+﻿body {
+}
+
+.metrosCuadrados{
+    text-decoration:overline;
+}
+
+.textContenido{
+    color:black;
+    text-align:justify;
+    font-size:1.2em;
+}
+
+.textContac{
+    color:white;
+    font-size:2em;
+    text-align:center;
+}
+.colorR{
+    color:#028FCC;
+    font-size:2em;
+    font-weight:bold;
+}

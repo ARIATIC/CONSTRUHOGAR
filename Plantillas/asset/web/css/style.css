@@ -475,7 +475,7 @@ ul.callbacks_tabs {
 .gallery-item {
 	width: 20%;
 	float: left;
-	padding: 5px;
+	padding: 1em;
 }
 
 .grid figure {
