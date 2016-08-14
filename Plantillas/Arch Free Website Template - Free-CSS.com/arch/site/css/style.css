@@ -377,7 +377,7 @@ header .socials {
 /****Blocks****/
 
 .block1 {
-    padding-top: 81px;
+    padding-top: 60px;
 }
 
 .block1 .count {
@@ -542,17 +542,18 @@ header .socials {
 
 /****Text styles****/
 .text1 {
-    font-size: 18px;
+    font-size:1.5em;
     line-height: 20px;
-    color: #585a5c;
-    margin-bottom: 22px;
+    color:black;
+    margin-bottom:0.5em;
 }
 
 .text2 {
-    font-size: 24px;
-    line-height: 20px;
-    color: #585a5c;
-    margin-bottom: 24px;
+    font-size:2em;
+    line-height: 30px;
+    color:red;
+    margin-bottom: 2em;
+    text-align:center;
 }
 
 .color1 {
