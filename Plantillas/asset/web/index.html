@@ -13,7 +13,7 @@
 <!-- Head -->
 <head>
 
-<title>Terrazas De San Sebastian</title>
+<title>Terrazas De San Sebastián</title>
 
 <!-- For-Mobile-Apps -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,6 +26,8 @@
 <!-- Bootstrap-CSS --> 		<link rel="stylesheet" href="css/bootstrap.min.css" 	type="text/css" media="all">
 <!-- Index-Page-CSS --> 	<link rel="stylesheet" href="css/style.css" 		type="text/css" media="all">
 <!-- Gallery-Popup-CSS --> 	<link rel="stylesheet" href="css/chocolat.css"		type="text/css" media="all">
+<!-- Gallery-Popup-CSS -->  <link rel="stylesheet" href="css/lupa.css"          type="text/css" media="all">
+
 <!-- //Custom-Stylesheet-Links -->
 
 <!-- Web-Fonts -->
@@ -33,7 +35,79 @@
 <!-- Logo-Font -->	 <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Bree+Serif'		   type='text/css'>
 <!-- Link-Font -->	 <link rel='stylesheet' href='//fonts.googleapis.com/css?family=Raleway:400,500,600'	   type='text/css'>
 <!-- //Web-Fonts -->
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.9.1/jquery-ui.min.js"></script>
 
+    <script>
+            $(document).ready(function(){
+
+	            var native_width = 0;
+	            var native_height = 0;
+
+	            //Now the mousemove function
+	            $(".magnify").mousemove(function(e){
+		            //When the user hovers on the image, the script will first calculate
+		            //the native dimensions if they don't exist. Only after the native dimensions
+		            //are available, the script will show the zoomed version.
+		            if(!native_width && !native_height)
+		            {
+			            //This will create a new image object with the same image as that in .small
+			            //We cannot directly get the dimensions from .small because of the
+			            //width specified to 200px in the html. To get the actual dimensions we have
+			            //created this image object.
+			            var image_object = new Image();
+			            image_object.src = $(".small").attr("src");
+
+			            //This code is wrapped in the .load function which is important.
+			            //width and height of the object would return 0 if accessed before
+			            //the image gets loaded.
+			            native_width = image_object.width;
+			            native_height = image_object.height;
+		            }
+		            else
+		            {
+			            //x/y coordinates of the mouse
+			            //This is the position of .magnify with respect to the document.
+			            var magnify_offset = $(this).offset();
+			            //We will deduct the positions of .magnify from the mouse positions with
+			            //respect to the document to get the mouse positions with respect to the
+			            //container(.magnify)
+			            var mx = e.pageX - magnify_offset.left;
+			            var my = e.pageY - magnify_offset.top;
+
+			            //Finally the code to fade out the glass if the mouse is outside the container
+			            if(mx < $(this).width() && my < $(this).height() && mx > 0 && my > 0)
+			            {
+				            $(".large").fadeIn(100);
+			            }
+			            else
+			            {
+				            $(".large").fadeOut(100);
+			            }
+			            if($(".large").is(":visible"))
+			            {
+				            //The background position of .large will be changed according to the position
+				            //of the mouse over the .small image. So we will get the ratio of the pixel
+				            //under the mouse pointer with respect to the image and use that to position the
+				            //large image inside the magnifying glass
+				            var rx = Math.round(mx/$(".small").width()*native_width - $(".large").width()/2)*-1;
+				            var ry = Math.round(my/$(".small").height()*native_height - $(".large").height()/2)*-1;
+				            var bgp = rx + "px " + ry + "px";
+
+				            //Time to move the magnifying glass with the mouse
+				            var px = mx - $(".large").width()/2;
+				            var py = my - $(".large").height()/2;
+				            //Now the glass moves with the mouse
+				            //The logic is to deduct half of the glass's width and height from the
+				            //mouse coordinates to place it with its center at the mouse coordinates
+
+				            //If you hover on the image now, you should see the magnifying glass in action
+				            $(".large").css({left: px, top: py, backgroundPosition: bgp});
+			            }
+		            }
+	            })
+            })
+    </script>
 </head>
 <!-- //Head -->
 
@@ -64,7 +138,7 @@
 						<li><a href="#gallery">ZONAS SOCIALES</a></li>
 						<!--<li><a href="#plans">PLANS</a></li>-->
 						<!--<li><a href="#faq">FAQs</a></li>-->
-						<li><a href="#team">UBICACION</a></li>
+						<li><a href="#team">UBICACIÓN</a></li>
 						<li><a href="#contact">CONTACTENOS</a></li>
 					</ul>
 				</div>
@@ -122,15 +196,20 @@
 		<div class="container">
 
 			<h1>EL PROYECTO</h1>
-			<div class="about-p">
-				<p>Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit... There is no one who loves pain itself, who seeks after it and wants to have it, simply because it is pain...</p>
-			</div>
 
 			<div class="about-grids">
-				<div class="col-md-5 col-sm-5 about-grid">
-					<img src="images/about.jpg" alt="Asset">
-				</div>
-				<div class="col-md-7 col-sm-7 about-grid">
+				
+                <!-- Lets make a simple image magnifier -->
+                <div class="magnify col-md-6 col-sm-6 about-grid">
+
+                    <!-- This is the magnifying glass which will contain the original/large version -->
+                    <div class="large"></div>
+
+                    <!-- This is the small image -->
+                    <img class="small" src="images/carmen-de-apicala-plano_orig.jpg"/>
+
+                </div>
+				<div class="col-md-6 col-sm-6 about-grid">
 
 					<div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
 						<div class="panel panel-default">
@@ -737,7 +816,7 @@
         </div>
         <div class="map-hover-1"></div>
 
-        <script type='text/javascript'>function init_map() { var myOptions = { zoom: 10, center: new google.maps.LatLng(4.149783596761232, -74.71739339419554), mapTypeId: google.maps.MapTypeId.ROADMAP }; map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions); marker = new google.maps.Marker({ map: map, position: new google.maps.LatLng(4.149783596761232, -74.71739339419554) }); infowindow = new google.maps.InfoWindow({ content: '<strong>Carmen de Apicala</strong><br>Carmen de Apicala, cundinamarca<br>' }); google.maps.event.addListener(marker, 'click', function () { infowindow.open(map, marker); }); infowindow.open(map, marker); } google.maps.event.addDomListener(window, 'load', init_map);</script>
+        <script type='text/javascript'>function init_map() { var myOptions = { zoom: 16, center: new google.maps.LatLng(4.149783596761232, -74.71739339419554), mapTypeId: google.maps.MapTypeId.ROADMAP }; map = new google.maps.Map(document.getElementById('gmap_canvas'), myOptions); marker = new google.maps.Marker({ map: map, position: new google.maps.LatLng(4.149783596761232, -74.71739339419554) }); infowindow = new google.maps.InfoWindow({ content: '<strong>Terrazas de San Sebastián</strong><br>Carmen de Apicalá, Tolima<br>' }); google.maps.event.addListener(marker, 'click', function () { infowindow.open(map, marker); }); infowindow.open(map, marker); } google.maps.event.addDomListener(window, 'load', init_map);</script>
 
     </div>
 
